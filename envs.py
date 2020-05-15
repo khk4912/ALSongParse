@@ -58,9 +58,7 @@ XML_WITH_MP3_TEMPLATE = """
 """
 
 
-
 XML_RESPONSE_TEMPLATE = """
-eXtensible Markup Language
     <?xml
         version="1.0"
         encoding="utf-8"

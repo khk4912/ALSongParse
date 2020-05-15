@@ -68,7 +68,6 @@ class Utils:
                 raise InvaildID3("ID3 버전이 지원되지 않습니다.")
 
         hasher.update(buf)
-        print(hasher.hexdigest())
         return hasher.hexdigest()
 
     @classmethod
