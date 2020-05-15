@@ -1,5 +1,6 @@
+import aiofiles
 from bs4 import BeautifulSoup
-from errors import CoolDownException, NoLyricException
+from .errors import CoolDownException, NoLyricException
 
 
 class Lyric:
@@ -26,11 +27,11 @@ class Lyric:
                 raise NoLyricException("정보를 찾지 못했습니다.")
 
         self.title = self._xml_find(self.xml_data, "strTitle")
-        self.artist = self._xml_find(self.xml_data, "strAlbum")
+        self.artist = self._xml_find(self.xml_data, "strArtist")
         self.count_good = self._xml_find(self.xml_data, "strCountGood")
         self.count_bad = self._xml_find(self.xml_data, "strCountBad")
         pre_lyric = self._xml_find(self.xml_data, "strLyric").split("<br>")
-        self.lyric = "\n".join(pre_lyric)
+        self.lyrics = "\n".join(pre_lyric)
 
     def __str__(self):
         TEMPLATE = """
@@ -57,8 +58,15 @@ class Lyric:
         return tg_tag.text.strip()
 
     def save_to_lrc(self, filename: str = None):
+        """
+        lrc 파일로 저장하는 함수입니다.
+        
+        파라미터
+            filename: 저장할 파일 이름,
+                      설정하지 않으면 자동으로 정합니다.
+        """
         if filename is None:
-            filename = self.title + ".lrc"
+            filename = "{} - {}.lrc".format(self.artist, self.title)
 
         with open(filename, "w", encoding="utf-8") as f:
             f.write(self.lyric)

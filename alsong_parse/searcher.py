@@ -3,14 +3,15 @@ import asyncio
 import aiohttp
 import aiofiles
 from typing import Dict, Union
-from utils import Utils
-from models import Lyric
+from .utils import Utils
+from .models import Lyric
 
 
 class Searcher:
     """ 가사 검색에 관련한 함수를 포함한 클래스입니다. """
 
-    async def search(self, filename: str):
+    @classmethod
+    def search(cls, filename: str):
         """
         파일을 기반으로 자동으로 
         제목, 아티스트명, 길이를 얻어 검색하여 정보를 리턴하는 함수입니다.  
@@ -20,13 +21,14 @@ class Searcher:
         파라미터
             filename: 가사를 찾을 파일 이름(mp3)
         """
-        info = await Utils.get_info(filename)
-        xml = await Utils.search_xml(info)
-        data = await Utils.post(xml)
+        info = Utils.get_info(filename)
+        xml = Utils.search_xml(info)
+        data = Utils.post(xml)
 
         return Lyric(data)
 
-    async def search_with_info(self, title: str, artist: str, length: int):
+    @classmethod
+    def search_with_info(cls, title: str, artist: str, length: int):
         """
         I3U 태그 기반으로 정보를 얻는 Searcher.search 함수와 다르게,  
         곡 제목과 아티스트 명, 길이를 받아 가사를 검색합니다.  
@@ -39,12 +41,13 @@ class Searcher:
             length: 검색하는 노래의 밀리세컨트 초(int)
         """
         info = {"title": title, "artist": artist, "length": length}
-        xml = await Utils.search_xml(info)
-        data = await Utils.post(xml)
+        xml = Utils.search_xml(info)
+        data = Utils.post(xml)
 
         return Lyric(data)
 
-    async def search_with_mp3(self, fileename: str):
+    @classmethod
+    def search_with_mp3(cls, fileename: str):
         """
         mp3 파일 자체의 해시로만 검색을 시도합니다.
         곡 제목, 아티스트 등 정보를 몰라도 검색할 수 있습니다.
@@ -54,6 +57,6 @@ class Searcher:
         파라미터
             filename: 가사를 찾을 파일 이름(mp3)
         """
-        xml = await Utils.search_with_mp3_xml(fileename)
-        data = await Utils.post(xml)
+        xml = Utils.search_with_mp3_xml(fileename)
+        data = Utils.post(xml)
         return Lyric(data, True)
