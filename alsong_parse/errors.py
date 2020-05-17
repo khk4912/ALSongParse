@@ -5,13 +5,13 @@ class InvaildID3(Exception):
     """
 
 
-class CoolDownException(Exception):
+class BadStatusException(Exception):
     """
-    너무 많은 전송으로 서버에서 정보를 받아오지 못할 때 발생합니다.
+    알 수 없이 정상이 아닌 Status가 리턴되면 발생합니다.
     """
 
 
 class NoLyricException(Exception):
     """
-    가사를 찾을 수 없을 때 발생하는 에러입니다.
+    가사를 찾을 수 없을 때 발생합니다.
     """
