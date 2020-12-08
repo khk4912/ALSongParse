@@ -14,6 +14,13 @@ GET_RESEMBLE_XML_COUNT_HEADER = {
     "SOAPAction": "ALSongWebServer/GetResembleLyric2Count",
 }
 
+GET_LYRIC_BY_ID_HEADER = {
+    "Host": "lyrics.alsong.co.kr",
+    "User-Agent": "gSOAP/2.7",
+    "Content-Type": "application/soap+xml",
+    "SOAPAction": "ALSongWebServer/GetLyricByID2",
+}
+
 GET_RESEMBLE_XML_LIST = """<?xml
         version="1.0"
         encoding="UTF-8"
@@ -63,7 +70,7 @@ GET_RESEMBLE_XML_COUNT = """<?xml
 """
 
 
-XML_WITH_ID_TEMPLATE = """<?xml
+GET_LYRIC_BY_ID_TEMPLATE = """<?xml
     version="1.0"
     encoding="UTF-8"
     ?>
